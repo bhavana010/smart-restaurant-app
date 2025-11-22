@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ "Edit Menu Item" if item else "Create Menu Item" }}</h2>
+
+<form method="POST">
+
+    <label>Name:</label>
+    <input type="text" name="name"
+           value="{{ item.Name if item else '' }}" required>
+
+    <label>Category:</label>
+    <select name="category_id">
+        {% for cat in categories %}
+        <option value="{{ cat.CategoryID }}"
+            {% if item and item.CategoryID == cat.CategoryID %}selected{% endif %}>
+            {{ cat.Name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label>Price ($):</label>
+    <input type="number" step="0.01"
+           name="price" value="{{ item.Price if item else '' }}" required>
+
+    <label>Active:</label>
+    <input type="checkbox" name="active"
+        {% if item and item.Active %}checked{% endif %}>
+
+    <br><br>
+    <button type="submit" style="background:#27ae60; color:white;">
+        {{ "Update Item" if item else "Create Item" }}
+    </button>
+
+</form>
+
+{% endblock %}

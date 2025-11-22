@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 style="color:#c0392b; font-weight:600;">📊 Restaurant Analytics Dashboard</h2>
+
+<div class="chart-card">
+    <h3>Daily Revenue</h3>
+    <canvas id="revenueChart"></canvas>
+</div>
+
+<div class="chart-card">
+    <h3>Top 5 Selling Menu Items</h3>
+    <canvas id="topItemsChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+new Chart(document.getElementById('revenueChart'), {
+    type: 'line',
+    data: {
+        labels: {{ dates|tojson }},
+        datasets: [{
+            label: "Daily Revenue ($)",
+            data: {{ revenues|tojson }},
+            borderColor: "#c0392b",
+            backgroundColor: "rgba(192,57,43,0.2)",
+            tension: 0.3,
+            borderWidth: 3
+        }]
+    }
+});
+
+new Chart(document.getElementById('topItemsChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ item_names|tojson }},
+        datasets: [{
+            label: "Sales ($)",
+            data: {{ item_revenues|tojson }},
+            backgroundColor: "#f39c12",
+            borderColor: "#c0392b",
+            borderWidth: 2
+        }]
+    }
+});
+</script>
+
+{% endblock %}
